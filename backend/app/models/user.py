@@ -1,18 +1,14 @@
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import String
-
+from sqlalchemy import Column, Integer, String
 from app.database.database import Base
 
 
 class User(Base):
-
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
 
-    name = Column(String)
+    name = Column(String, nullable=False)
 
-    email = Column(String, unique=True)
+    email = Column(String, unique=True, index=True, nullable=False)
 
-    password = Column(String)
+    password = Column(String, nullable=False)
