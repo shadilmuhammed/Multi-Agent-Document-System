@@ -1,8 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 
 from app.services.vector_service import search_documents
 from app.services.llm_service import ask_llm
+from app.core.dependencies import get_current_user
 
 router = APIRouter(tags=["Search"])
 
@@ -12,7 +13,10 @@ class SearchRequest(BaseModel):
 
 
 @router.post("/search")
-def search(request: SearchRequest):
+def search(
+    request: SearchRequest,
+    current_user=Depends(get_current_user)
+):
     # Retrieve relevant chunks from ChromaDB
     documents = search_documents(request.query)
 
