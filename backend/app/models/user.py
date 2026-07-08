@@ -1,4 +1,6 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
+
 from app.database.database import Base
 
 
@@ -12,3 +14,9 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
 
     password = Column(String, nullable=False)
+
+    documents = relationship(
+        "Document",
+        back_populates="user",
+        cascade="all, delete-orphan"
+    )

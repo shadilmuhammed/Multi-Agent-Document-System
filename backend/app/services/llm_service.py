@@ -3,20 +3,17 @@ import ollama
 
 def ask_llm(question, context):
     prompt = f"""
-You are a helpful AI assistant.
+You are an AI assistant that answers questions ONLY using the provided document.
 
-Your job is to answer questions ONLY using the provided document context.
+Rules:
+- Answer ONLY from the context below.
+- Do NOT use your own knowledge.
+- Do NOT guess or infer information.
+- If the answer is not explicitly present in the context, reply exactly:
+"I couldn't find that information in the uploaded document."
 
-Instructions:
-- Use only the information from the context.
-- If the answer exists, explain it naturally.
-- If the answer does not exist in the context, reply:
-  "I couldn't find that information in the uploaded document."
-
-Document Context:
---------------------
+Context:
 {context}
---------------------
 
 Question:
 {question}

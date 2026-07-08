@@ -14,7 +14,13 @@ collection = client.get_or_create_collection(
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
 
-def store_embeddings(filename, chunks, embeddings):
+def store_embeddings(
+    filename,
+    chunks,
+    embeddings,
+    user_id,
+    document_id
+):
     """
     Store document chunks with embeddings and metadata.
     """
@@ -28,10 +34,12 @@ def store_embeddings(filename, chunks, embeddings):
         ids.append(str(uuid4()))
 
         metadatas.append({
-            "filename": filename,
-            "chunk": i,
-            "uploaded_at": timestamp
-        })
+    "filename": filename,
+    "chunk": i,
+    "uploaded_at": timestamp,
+    "user_id": user_id,
+    "document_id": document_id
+})
 
     collection.add(
         ids=ids,
@@ -40,16 +48,33 @@ def store_embeddings(filename, chunks, embeddings):
         metadatas=metadatas
     )
 
+def delete_document(document_id):
+    collection.delete(
+        where={
+            "document_id": document_id
+        }
+    )
 
-def search_documents(query):
-    """
-    Search the vector database using the query.
-    """
 
+def search_documents(
+    query,
+    user_id,
+    document_id
+):
     query_embedding = model.encode(query).tolist()
 
     results = collection.query(
         query_embeddings=[query_embedding],
+        where={
+            "$and": [
+                {
+                    "user_id": user_id
+                },
+                {
+                    "document_id": document_id
+                }
+            ]
+        },
         n_results=3
     )
 
