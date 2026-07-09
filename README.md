@@ -23,37 +23,19 @@ An AI-powered document assistant that allows users to upload PDF documents, ask 
 
 ---
 
-# 📸 Screenshots
+## 📸 Screenshots
 
-## Login
+### Login
+![Login](screenshots/login.png)
 
-(Add Screenshot)
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
 
----
+### AI Chat
+![AI Chat](screenshots/chat.png)
 
-## Dashboard
-
-(Add Screenshot)
-
----
-
-## AI Chat
-
-(Add Screenshot)
-
----
-
-## PDF Preview
-
-(Add Screenshot)
-
----
-
-## Profile
-
-(Add Screenshot)
-
----
+### Profile
+![Profile](screenshots/profile.png)
 
 # 🛠 Tech Stack
 
