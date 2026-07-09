@@ -11,7 +11,13 @@ collection = client.get_or_create_collection(
 )
 
 # Load embedding model once
-model = SentenceTransformer("all-MiniLM-L6-v2")
+_model = None
+
+def get_model():
+    global _model
+    if _model is None:
+        _model = SentenceTransformer("all-MiniLM-L6-v2")
+    return _model
 
 
 def store_embeddings(
@@ -61,7 +67,7 @@ def search_documents(
     user_id,
     document_id
 ):
-    query_embedding = model.encode(query).tolist()
+    query_embedding = get_model().encode(query).tolist()
 
     results = collection.query(
         query_embeddings=[query_embedding],
